@@ -347,16 +347,12 @@ public class RuneLite
 		// Initialize UI
 		clientUI.init();
 
-		// Initialize Discord service
-		discordService.init();
-
 		// Register event listeners
 		eventBus.register(clientUI);
 		eventBus.register(pluginManager);
 		eventBus.register(externalPluginManager);
 		eventBus.register(overlayManager);
 		eventBus.register(configManager);
-		eventBus.register(discordService);
 
 		// Add core overlays
 		WidgetOverlay.createOverlays(overlayManager, client).forEach(overlayManager::add);
