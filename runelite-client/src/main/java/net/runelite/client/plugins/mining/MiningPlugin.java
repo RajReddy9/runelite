@@ -75,7 +75,7 @@ public class MiningPlugin extends Plugin
 {
 	private static final Pattern MINING_PATTERN = Pattern.compile(
 		"You swing your pick at the " +
-			"(?:rock|star)" +
+			"(?:rock|star|deposit)" +
 			"(?:\\.|!)");
 
 	private static final int DAEYALT_ESSENCE_MINE_REGION = 14744;
@@ -313,9 +313,12 @@ public class MiningPlugin extends Plugin
 				case ObjectID.ROCKS1:
 				case ObjectID.ROCKS2:
 				case ObjectID.ROCKS3:
+				case ObjectID.LEADROCK1_EMPTY:
+				case ObjectID.NICKELROCK1_EMPTY:
 				case ObjectID.MY2ARM_SALTROCK_EMPTY: // Basalt etc
 				case ObjectID.PRIF_MINE_ROCKS1_EMPTY: // Trahaearn mine
 				case ObjectID.FOSSIL_ASHPILE_EMPTY:
+				case ObjectID.RUBIUMROCK1_EMPTY:
 				{
 					addRockRespawn(Rock.ROCK, WorldPoint.fromCoord(locCoord), ticks);
 					break;

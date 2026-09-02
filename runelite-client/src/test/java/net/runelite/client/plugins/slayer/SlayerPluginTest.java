@@ -79,8 +79,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class SlayerPluginTest
 {
-	private static final String SUPERIOR_MESSAGE = "A superior foe has appeared...";
-
 	@Mock
 	@Bind
 	Client client;
@@ -179,11 +177,11 @@ public class SlayerPluginTest
 	@Test
 	public void testSuperiorNotification()
 	{
-		ChatMessage chatMessageEvent = new ChatMessage(null, GAMEMESSAGE, "Superior", SUPERIOR_MESSAGE, null, 0);
+		ChatMessage chatMessageEvent = new ChatMessage(null, GAMEMESSAGE, "Superior", "@mes_hl_red@A superior foe has appeared...</col>", null, 0);
 
 		when(slayerConfig.showSuperiorNotification()).thenReturn(Notification.ON);
 		slayerPlugin.onChatMessage(chatMessageEvent);
-		verify(notifier).notify(Notification.ON, SUPERIOR_MESSAGE);
+		verify(notifier).notify(Notification.ON, "A superior foe has appeared...");
 	}
 
 	@Test
@@ -279,6 +277,19 @@ public class SlayerPluginTest
 		assertTrue(matches("Loar shade", Task.SHADES));
 		assertTrue(matches("Loar shadow", Task.SHADES));
 		assertTrue(matches("Urium shadow", Task.SHADES));
+		assertTrue(matches("Juvenile custodian stalker", Task.CUSTODIAN_STALKERS));
+		assertTrue(matches("Mature custodian stalker", Task.CUSTODIAN_STALKERS));
+		assertTrue(matches("Elder custodian stalker", Task.CUSTODIAN_STALKERS));
+		assertTrue(matches("Ancient Custodian", Task.CUSTODIAN_STALKERS));
+		assertTrue(matches("Gryphon", Task.GRYPHONS));
+		assertTrue(matches("Dire gryphon", Task.GRYPHONS));
+		assertTrue(matches("The Shellbane Gryphon", Task.GRYPHONS));
+		assertTrue(matches("The Shellbane Gryphon", Task.SHELLBANE_GRYPHON));
+		assertTrue(matches("Lava Strykewyrm", Task.WYRMS));
+		assertTrue(matches("Magma strykewyrm", Task.WYRMS));
+		assertTrue(matches("Aquanite", Task.AQUANITES));
+		assertTrue(matches("Elder Aquanite", Task.AQUANITES));
+		assertTrue(matches("Frost dragon", Task.FROST_DRAGONS));
 
 		assertFalse(matches("Rat", Task.PIRATES));
 		assertFalse(matches("Wolf", Task.WEREWOLVES));
