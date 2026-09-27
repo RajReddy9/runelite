@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023, Adam <Adam@sigterm.info>
+ * Copyright (c) 2021, Jordan Atwood <nightfirecat@protonmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,23 +22,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.grandexchange;
+package net.runelite.client.plugins.skillcalculator.skills;
 
-import com.google.gson.annotations.SerializedName;
-import java.time.Instant;
-import lombok.Data;
+import java.util.EnumSet;
+import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
-class Trade
+@AllArgsConstructor
+@Getter(onMethod_ = @Override)
+public enum SailingBonus implements SkillBonus
 {
-	@SerializedName("b")
-	boolean buy;
-	@SerializedName("i")
-	int itemId;
-	@SerializedName("q")
-	int quantity;
-	@SerializedName("p")
-	long price;
-	@SerializedName("t")
-	Instant time;
+	HORIZONS_LURE("Horizon's Lure", 1.025f),
+	CREW_DECKHANDINESS_3("Crew Deckhandiness 3", 0.3f),
+	CREW_DECKHANDINESS_4("Crew Deckhandiness 4", 0.4f),
+	;
+
+	private final String name;
+	private final float value;
+
+	@Override
+	public Set<SailingBonus> getCanBeStackedWith()
+	{
+		switch (this)
+		{
+			case CREW_DECKHANDINESS_3:
+			case CREW_DECKHANDINESS_4:
+				return EnumSet.complementOf(EnumSet.of(CREW_DECKHANDINESS_3, CREW_DECKHANDINESS_4));
+			default:
+				return EnumSet.complementOf(EnumSet.of(this));
+		}
+	}
 }
